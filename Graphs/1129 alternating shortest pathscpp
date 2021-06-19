@@ -1,0 +1,51 @@
+#define pp pair<int, int>
+#define ppp pair<int, pp>
+#define INF 9999999
+class Solution {
+public:
+    vector<int> shortestAlternatingPaths(int n, vector<vector<int>>& red, vector<vector<int>>& blue) {
+        vector<vector<pp>> adj(n);
+        
+        for(int i=0; i<red.size(); i++){
+            int x = red[i][0], y = red[i][1];
+            adj[x].push_back({y, 1});
+        }
+        for(int i=0; i<blue.size(); i++){
+            int x = blue[i][0], y = blue[i][1];
+            adj[x].push_back({y, 0});
+        }
+        
+        priority_queue<ppp, vector<ppp>, greater<ppp>> pq;
+        
+        vector<int> dist(n, INF);
+        
+        dist[0] = 0;
+        pq.push({0, {0, -1}});
+        
+        while(pq.size() > 0){
+            ppp cur = pq.top(); pq.pop();
+            int u = cur.second.first, d = cur.first;
+            
+            int color_prev_edge = cur.second.second;
+            
+            for(int i= 0; i<adj[u].size(); i++){
+                int color_next_edge = adj[u][i].second, neigh = adj[u][i].first;
+                
+                if(color_prev_edge == -1 || color_next_edge == 1 - color_prev_edge){
+                    
+                    if(dist[neigh] > d + 1){
+                        dist[neigh] = d + 1;
+                    }
+                    
+                    pq.push({d + 1, {neigh, color_next_edge}});
+                }
+            }
+            int cnt = n;
+            for(auto i: dist) if(i != INF) cnt--;
+            if(cnt == 0) break;
+            
+        }
+        for(int i=0; i<n; i++) if(dist[i]==INF) dist[i] = -1; 
+        return dist;
+    }
+};
