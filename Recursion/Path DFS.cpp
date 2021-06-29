@@ -131,3 +131,65 @@ public:
         return count;
     }
 };
+
+/*
+
+    4. Path with Maximum Gold
+
+    In a gold mine grid of size m x n,
+    each cell in this mine has an integer representing the amount of gold in that cell, 0 if it is empty.
+
+    Return the maximum amount of gold you can collect under the conditions:
+
+    Input: grid = [[0,6,0],[5,8,7],[0,9,0]]
+    Output: 24
+
+    Explanation:
+    [[0,6,0],
+     [5,8,7],
+     [0,9,0]]
+
+    Path to get the maximum gold, 9 -> 8 -> 7.
+
+*/
+
+class Solution {
+public:
+    vector<vector<bool>> v;
+    int n, m;
+
+    int DFS(vector<vector<int>>& grid, int i, int j) {
+
+        v[i][j] = 1;
+        int ans = 0;
+        int x[] = {1, -1, 0, 0}, y[] = {0, 0, -1, 1};
+
+        for (int k = 0; k < 4; k++) {
+            int xn = i + x[k], yn = j + y[k];
+            if (xn >= 0 && yn >= 0 && xn < n && yn < m && !v[xn][yn] && grid[xn][yn] != 0)
+                ans = max(ans, DFS(grid, xn, yn));
+        }
+
+        v[i][j] = 0;
+
+        return ans + grid[i][j];
+    }
+
+    int getMaximumGold(vector<vector<int>>& grid) {
+        n = grid.size(), m = grid[0].size();
+        v.resize(n, vector<bool>(m, 0));
+
+        int ans = -1;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (grid[i][j] != 0) {
+                    int val = DFS(grid, i, j);
+                    ans = max(ans, val);
+                }
+            }
+        }
+
+        return ans;
+    }
+};
