@@ -77,12 +77,16 @@ These are user-defined datatypes which holds its own data members and member fun
 
 Objects are identifiable entities with some property or characteristic used to define an instance of a class. Each object takes up space in the memory and has a reference similar to a structure in C.
 
+
+
 #### Encapsulation
 This is the wrapping up of data and information into a single unit or the binding togerther of data and functions in OOP.
 
 Consider a real-life example of encapsulation, in a company, there are different sections. In encapsulation, the data of the sales section and the employees that can manipulate them are wrapped under a single name “sales section”.
 
 Encapsulation also leads to data abstraction or hiding. As using encapsulation also hides the data.
+
+
 
 #### Abstraction
 Abstraction means displaying only essential information and hiding the details such as implementation.
@@ -92,11 +96,20 @@ Consider a real-life example of a man driving a car. The man only knows that pre
 - Abstraction using Classes through "Access Specifiers"
 - Abstraction using Header Files
 
+
+
+#### Data Hiding
+Data hiding is a software development technique specifically used in object-oriented programming (OOP) to hide internal object details (data members). Data hiding ensures exclusive data access to class members and protects object integrity by preventing unintended or intended changes.
+
+
+
 #### Polymorphism
 It is the ability of representing the same data in multiple forms. An operation may exhibit different behaviours in different instances. The behaviour depends upon the types of data used in the operation.
 
 - Operator Overloading: The process of making an operator to exhibit different behaviours in different instances is known as operator overloading.
 - Function Overloading: Function overloading is using a single function name to perform different types of tasks. 
+
+
 
 #### Inheritance
 The capability of a class to derive properties and characteristics from another class is called Inheritance.
@@ -106,13 +119,19 @@ The capability of a class to derive properties and characteristics from another 
 
 Inheritance supports the concept of *“reusability”*, i.e. when we want to create a new class and there is already a class that includes some of the code that we want, we can derive our new class from the existing class.
 
+
+
 #### Dynamic Binding
 In dynamic binding, the code to be executed on a function call is decided at runtime. Eg. Virtual Functions and Virtual classes support this.
+
+
 
 #### Message Passing
 Objects communicate with one another by sending and receiving information to each other. A message for an object is a request for execution of a procedure and therefore will invoke a function in the receiving object that generates the desired results.
 
 Message passing involves specifying the name of the object, the name of the function and the information to be sent.
+
+
 
 #### The basic thing which are the essential feature of an object oriented programming are Inheritance, Polymorphism and Encapsulation. 
 
