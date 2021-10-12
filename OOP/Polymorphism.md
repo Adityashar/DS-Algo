@@ -79,20 +79,78 @@ It is the ability of representing the same data in more than one forms. . A real
                 return res;
             }
             void print() { cout << real << " + i" << imag << endl; }
+            friend Complex operator + (Complex const &, Complex const &);
         };
         
-        int main()
-        {
+        Complex operator + (Complex const &c1, Complex const &c2) {
+            return Complex(c1.real + c2.real, c1.imag + c2.imag);
+        }
+
+        int main() {
             Complex c1(10, 5), c2(2, 4);
             Complex c3 = c1 + c2; // An example call to "operator+"
             c3.print();
         }
        ```
 
-        
+       *What is the difference between operator functions and normal functions?*
+       The only differences are, name of an operator function is always operator keyword followed by symbol of operator and operator functions are called when the corresponding operator is used.
 
+
+       *Can we overload all operators?*       
+        Almost all operators can be overloaded except few- '.', '::', '?:', 'sizeof';
+
+       *Important points about operator overloading*
+       1)  For operator overloading to work, at least one of the operands must be a user defined class object.
+       2)  Assignment Operator: Compiler automatically creates a default assignment operator with every class.
+       3)  Conversion Operator: We can also write conversion operators that can be used to convert one type to another type. 
 
 
 - #### **Run-time**
+    This type of polymorphism is achieved by Function Overriding.
 
+    **Function overriding** on the other hand occurs when a derived class has a definition for one of the member functions of the base class. That base function is said to be overridden.
 
+    ```cpp
+
+    class base
+    {
+    public:
+        virtual void print ()
+        { cout<< "print base class" <<endl; }
+    
+        void show ()
+        { cout<< "show base class" <<endl; }
+    };
+    
+    class derived:public base
+    {
+    public:
+        void print () //print () is already virtual function in derived class, we could also declared as virtual void print () explicitly
+        { cout<< "print derived class" <<endl; }
+    
+        void show ()
+        { cout<< "show derived class" <<endl; }
+    };
+    
+    //main function
+    int main() 
+    {
+        base *bptr;
+        derived d;
+
+        // base pointer referenced to dervied class object
+        bptr = &d;
+        
+        //virtual function, binded at runtime (Runtime polymorphism)
+        bptr->print(); 
+        // print derived class
+
+        // Non-virtual function, binded at compile time
+        bptr->show(); 
+        // show base class
+
+        return 0;
+    } 
+
+    ```

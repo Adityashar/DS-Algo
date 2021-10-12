@@ -1,73 +1,72 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int n, m;
+#define pp pair<int, int>
+#define ps pair<pp, string>
+#define f first
+#define s second
 
-int longestLine(vector<vector<int>> &M) {
-	n = M.size();
-	m = M[0].size();
 
-	vector<vector<vector<int>>> dp(n, vector<vector<int>>(m, vector<int>(4, 0)));
+vector<vector<int>> shortestPath(vector<vector<int>> &grid) {
+	int n = grid.size();
+	int m = grid[0].size();
 
-	int x[] = { -1, 0, -1, -1};
-	int y[] = {0, -1, -1, 1};
-	int ans = 0;
+	vector<vector<int>> level(n, vector<int>(m, -1));
 
-	for (int i = 0; i < n; i++) {
-		for (int k = 0; k < 4; k++) {
-			if (k == 0 && i != 0) {
-
-				dp[i][0][k] = M[i][0] == 0 ? 0 : 1 + dp[i - 1][0][k];
-			}
-			else dp[i][0][k] = M[i][0];
-			if (k == 3)
-				dp[i][m - 1][k] = M[i][0];
-			ans = max(ans, dp[i][0][k]);
+	queue<pp> q;
+	
+	for(int i = 0; i < n; i++) {
+		for(int j = 0; j < m; j++) {
+			if(grid[i][j] == 1)
+				q.push({i, j}), level[i][j] = 0;
 		}
 	}
 
-	for (int i = 0; i < m; i++) {
-		for (int k = 0; k < 4; k++) {
-			if (k == 1 && i != 0) {
-				dp[0][i][k] = M[0][i] == 0 ? 0 : 1 + dp[0][i - 1][k];
-			}
-			else dp[0][i][k] = M[0][i];
+	int l = 1;
 
-			ans = max(ans, dp[0][i][k]);
+	while(q.size() > 0) {
+		int s = q.size();
+
+		while(s--) {
+			pp cur = q.front(); 
+			q.pop();
+
+			int x[] = {-1,1,0,0}, y[] = {0,0,1,-1};
+			int val[] = {3, 2, 4, 5};
+
+			for(int k = 0; k < 4; k++) {
+				int nx = x[k] + cur.f, ny = y[k] + cur.s;
+
+				if(nx >= 0 && ny >= 0 && nx < n && ny < m && grid[nx][ny] != -1 && grid[nx][ny] != 1) {
+					if(grid[nx][ny] == 0) {
+						grid[nx][ny] = val[k];
+						level[nx][ny] = l;
+						q.push({nx, ny});
+					}
+					else if(level[nx][ny] == l && grid[nx][ny] > val[k]){
+						grid[nx][ny] = val[k];
+					}
+				}
+			} 
 		}
+		l++;
 	}
 
-
-	for (int i = 1; i < n; i++) {
-		for (int j = 1; j < m ; j++) {
-			for (int k = 0; k < 4; k++) {
-				if (k == 3 && j == m - 1)
-					continue;
-				int xn = i + x[k], yn = j + y[k];
-				dp[i][j][k] = M[i][j] == 0 ? 0 : 1 + dp[xn][yn][k];
-				ans = max(dp[i][j][k], ans);
-			}
-		}
-	}
-
-	// for (int k = 0; k < 4; k++) {
-	// 	for (int i = 0; i < n; i++) {
-	// 		for (int j = 0; j < m; j++) {
-	// 			cout << dp[i][j][k] << " ";
-	// 		}
-	// 		cout << endl;
-	// 	}
-	// 	cout << endl;
-	// }
-
-	return ans;
+	return grid;
 }
 
 
 int main() {
 
-	vector<vector<int>> M = {{0, 1, 1, 0}, {0, 1, 1, 0}, {0, 0, 0, 1}};
-	cout << longestLine(M);
+	vector<vector<int>> M = {{1,0,1}, {0,0,0}, {1,0,0}};
+	
+	vector<vector<int>> ans = shortestPath(M);
 
-	return -1;
+	for(auto i: ans) {
+		for(auto j: i)
+			cout<<j<<" ";
+		cout<<endl;
+	}
+
+	return 0;
 }
