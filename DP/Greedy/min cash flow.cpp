@@ -100,3 +100,59 @@ int main()
 	minCashFlow(graph);
 	return 0;
 }
+
+
+
+#include<bits/stdc++.h>
+
+#define pp pair<int, int>
+#define f first
+#define s second
+
+vector<vector<int>> minCashFlow(vector<vector<int>>& T, int n)
+{
+	vector<int> amt(n, 0);
+
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			amt[i] -= T[i][j];
+			amt[j] += T[i][j];
+		}
+	}
+
+	priority_queue<pp> maxheap;
+	priority_queue<pp, vector<pp>, greater<pp>> minheap;
+
+	for (int i = 0; i < n; i++) {
+		if (amt[i] < 0)
+			minheap.push({amt[i], i});
+		else if (amt[i] > 0)
+			maxheap.push({amt[i], i});
+	}
+
+	vector<vector<int>> ans(n, vector<int>(n, 0));
+
+	while (maxheap.size() > 0 && minheap.size() > 0) {
+		pp neg = minheap.top(); minheap.pop();
+		pp pos = maxheap.top(); maxheap.pop();
+
+		neg.f *= -1;
+
+		int val = min(neg.f, pos.f);
+
+		neg.f -= val;
+		pos.f -= val;
+
+		if (neg.f == 0) {
+			maxheap.push(pos);
+			ans[neg.s][pos.s] = val;
+		}
+		else {
+			neg.f *= -1;
+			minheap.push(neg);
+			ans[neg.s][pos.s] = val;
+		}
+	}
+
+	return ans;
+}

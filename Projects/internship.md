@@ -11,7 +11,7 @@ i was assigned a project which aimed at building a user informative tool for pro
 
 now during my time at the internship, there was never a dearth of challenges. the mentors gave new feature reqs every week and adding those functionalities to the system was my task
 
-my first challenge was to decide a system which could handle 2 imp factors which include: 
+my first challenge was to decide an interactive system which provide a good ux could handle 2 imp factors which include: 
 
 Classify the intent of the query
 Extract imp info from the query
