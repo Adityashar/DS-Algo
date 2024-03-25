@@ -3,6 +3,7 @@
 1. Subset that have the sum K
 2. Partition Equal Subset Sum
 3. Partition K Equal Subset Sum
+4. https://discuss.codechef.com/t/count-all-ordered-pairs-with-bitwise-and-equals-to-zero/36081
 
 ## Example
 #### 416. Partition Equal Subset Sum
